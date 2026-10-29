@@ -1,0 +1,23 @@
+{
+  "allow_access": "",
+  "audit_log_level": [
+    "DDL",
+    "ROLE"
+  ],
+  "backup_retention_period": 14,
+  "cross_region_backup": true,
+  "db_parameters": [],
+  "engine_version": "16",
+  "ignore_default_ips": false,
+  "locale": "en_US",
+  "maintenance_window": {
+    "day_of_week": "Sunday",
+    "duration": 1,
+    "start_hour_utc": 4
+  },
+  "memory": 4,
+  "multi_az": true,
+  "public_access": false,
+  "region": "eu-central-1",
+  "storage": 20
+}

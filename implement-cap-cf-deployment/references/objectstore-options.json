@@ -1,0 +1,22 @@
+{
+  "autoExpiration": [
+    {
+      "id": "ExpireNonCurrentVersions",
+      "status": "Enabled",
+      "expirationInDays": 0,
+      "expiredObjectDeleteMarker": false,
+      "noncurrentVersionExpiration": {
+        "days": 14,
+        "newerNoncurrentVersions": -1
+      },
+      "filter": {}
+    }
+  ],
+  "backupEnabled": false,
+  "backupRetentionPeriod": 0,
+  "enableSAL": false,
+  "preventDeletion": false,
+  "salLogsRetentionPeriod": 0,
+  "usesCustomEncryption": false,
+  "versioning": true
+}

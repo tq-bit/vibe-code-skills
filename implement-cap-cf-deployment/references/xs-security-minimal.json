@@ -1,0 +1,73 @@
+{
+  "xsappname": "$XSAPPNAME",
+  "tenant-mode": "dedicated",
+  "description": "Security profile of called application",
+  "scopes": [
+    {
+      "name": "uaa.user",
+      "description": "UAA"
+    },
+    {
+      "name": "$XSAPPNAME.admin",
+      "description": "Administrator access to the application (all entities and actions)"
+    },
+    {
+      "name": "$XSAPPNAME.user",
+      "description": "Business user access to the application"
+    },
+    {
+      "name": "$XSAPPNAME.integration",
+      "description": "Full access for technical integration clients (client credentials grant)"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "admin",
+      "description": "Full access to all entities and actions",
+      "scope-references": [
+        "$XSAPPNAME.admin"
+      ]
+    },
+    {
+      "name": "user",
+      "description": "Full CRUD access for business users",
+      "scope-references": [
+        "$XSAPPNAME.user"
+      ]
+    },
+    {
+      "name": "integration",
+      "description": "Full access for technical integration clients (granted via authorities, not assignable to users)",
+      "scope-references": [
+        "$XSAPPNAME.integration"
+      ]
+    },
+    {
+      "name": "Token_Exchange",
+      "description": "UAA",
+      "scope-references": [
+        "uaa.user"
+      ]
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "myapp-admin",
+      "description": "Administrators of the application",
+      "role-template-references": [
+        "$XSAPPNAME.admin"
+      ]
+    },
+    {
+      "name": "myapp-user",
+      "description": "Business users of the application",
+      "role-template-references": [
+        "$XSAPPNAME.user"
+      ]
+    }
+  ],
+  "authorities": [
+    "$XSAPPNAME.integration"
+  ]
+}

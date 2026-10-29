@@ -1,0 +1,51 @@
+# Reference: `mta.yaml` — binding variant (binds EXISTING instances)
+#
+# The modules (srv, postgres-deployer, ui, app-deployer, standalone
+# approuter, destinations) are IDENTICAL to the full variant — see
+# references/mta-premium.yaml. Only the resources differ. The binding
+# variant without a Job Scheduler also uses xs-security-minimal.json
+# (references/xs-security-minimal.json) instead of xs-security.json.
+#
+# Gotchas specific to this variant:
+#   - The html5-apps-repo app-host is BOUND, not created: the app ID is
+#     unique per subaccount; a parallel app-host fails with CODE 1001
+#     ("application metadata ... already exists"). The app-deployer
+#     updates the existing app IN PLACE (new content + dynamic srv-api
+#     destination pointing at THIS MTA's srv).
+#   - The ServiceInstanceName inside the destinations content module
+#     remains the REAL CF instance name of the bound repo-host (resolved
+#     against the space), even when the MTA resource name carries a
+#     prefix.
+#   - Optional provider-specific existing instances (e.g. SAP AI Core)
+#     are only bound when the provider needs them — a deploy CLI may
+#     drop such a resource AND the srv requires entry from the generated
+#     descriptor when the provider is not chosen.
+
+resources:
+  # EXISTING PostgreSQL instance — bound, not created
+  - name: com.example.cap.myapp-postgres
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: myapp-postgres-sql
+
+  # EXISTING Object Store instance — bound, not created
+  - name: com.example.cap.myapp-objectstore
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: myapp-object-store
+
+  # EXISTING SAP AI Core instance — bound, not created (optional; only
+  # bound when the LLM provider is 'aicore' — the deploy CLI drops this
+  # resource and the srv requires entry otherwise)
+  - name: com.example.cap.myapp-aicore
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: myapp-aicore
+
+  # EXISTING html5-apps-repo app-host — bound, not created (app ID is
+  # unique per subaccount; the app-deployer updates the existing app
+  # in place — a parallel app-host would fail with CODE 1001)
+  - name: com.example.cap.myapp-html5-repo-host
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: com.example.cap.myapp-html5-repo-host
